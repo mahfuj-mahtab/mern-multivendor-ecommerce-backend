@@ -49,7 +49,7 @@ const userRegister =asyncHandler(
             first_name,
             last_name,
             username : email.split("@")[0],
-            role : 'USER',
+            role : 'VENDOR',
             avatar : 'Default.jpg'
         })
         return res.status(201).json(
@@ -90,4 +90,11 @@ const userLogin = asyncHandler(
         )
     }
 )
-export {userRegister,userLogin}
+
+const userProfile = asyncHandler(
+    async (req,res)=>{
+        console.log(req.user,'userrr');
+        
+    }
+)
+export {userRegister,userLogin,userProfile}
