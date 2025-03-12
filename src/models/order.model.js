@@ -12,11 +12,6 @@ const orderItemSchema = new mongoose.Schema({
         ref: 'Product',
         required: true
     },
-    variant: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Variant',
-        required: true
-    },
     quantity: {
         type: Number,
         required: true
@@ -99,8 +94,8 @@ const orderSchema = new mongoose.Schema({
     },
     payment_status: {
         type: String,
-        enum: ['PAID', 'UNPAID', 'REFUNDED'],
-        default: 'UNPAID'
+        enum: ['PAID', 'UNPAID', 'REFUNDED','COD'],
+        default: 'COD'
     },
     tracking_info: {
         courier: { type: String, default: '' },
