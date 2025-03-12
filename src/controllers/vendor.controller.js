@@ -24,10 +24,12 @@ const vendorProfileAddProduct = asyncHandler(
         const user = req.user;
         const vendor = await Vendor.findOne({user : user._id});
         
-        const {name,banner_img,sku,description,category,stock_quantity} = req.body;
+        const {name,sku,description,category,stock_quantity} = req.body;
+        
+        
         const product = await Product.create({
             name,
-            banner_img,
+            banner_img : req.file.path,
             sku,
             description,
             category,
