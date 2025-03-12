@@ -49,7 +49,7 @@ const userRegister =asyncHandler(
             first_name,
             last_name,
             username : email.split("@")[0],
-            role : 'VENDOR',
+            role : 'USER',
             avatar : 'Default.jpg'
         })
         return res.status(201).json(

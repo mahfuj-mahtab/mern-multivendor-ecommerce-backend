@@ -47,6 +47,14 @@ const productSchema = new mongoose.Schema({
         ref : "Vendor",
         required : true
     },
+    banner_img : {
+        type : String,
+        required : true
+    },
+    sku:{
+        type : String,
+        required : true
+    },
     description : {
         type : String,
         required : true
@@ -61,12 +69,13 @@ const productSchema = new mongoose.Schema({
         type : Boolean,
         default : false
     },
-    variation : [{
-        type : variationSchema,
+    stock_quantity : {
+        type : Number,
         required : true
-    }]
+    },
+    
 },{timestamps : true})
     productSchema.index({ category: 1, vendor: 1 });
-    variationSchema.index({ sku: 1 }, { unique: true });
+    // variationSchema.index({ sku: 1 }, { unique: true });
 export const Product = mongoose.model("Product", productSchema);
 export const Variation = mongoose.model("Variation", variationSchema);
