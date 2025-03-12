@@ -7,6 +7,11 @@ const orderItemSchema = new mongoose.Schema({
         ref: 'Order',
         required: true
     },
+    vendor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Vendor',
+        required: true
+    },
     product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product',
@@ -70,11 +75,7 @@ const orderSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    vendor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Vendor',
-        required: true
-    },
+
     phone: {
         type: String,
         required: true
@@ -114,7 +115,7 @@ const orderSchema = new mongoose.Schema({
 
 
 orderSchema.index({ user: 1, status: 1 });   // ✅ Fast search for orders by user & status
-orderSchema.index({ vendor: 1 });           // ✅ Fast search for vendor orders
+        // ✅ Fast search for vendor orders
 orderItemSchema.index({ order: 1 });        // ✅ Fast search for items by order
 paymentSchema.index({ order: 1 });          // ✅ Fast payment lookup
 

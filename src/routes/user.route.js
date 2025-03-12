@@ -4,11 +4,17 @@ import { userRegister, userLogin,userProfile } from "../controllers/user.control
 import { verifyJwt } from "../middlewares/auth.middleware.js";
 import checkVendor from "../middlewares/vendor.middleware.js";
 import { vendorProfile ,vendorProfileAllProducts,vendorProfileAddProduct,vendorProfileAllOrders} from "../controllers/vendor.controller.js";
+import { userOrder } from "../controllers/order.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
 router.route("/register").post(userRegister)
 router.route("/login").post(userLogin)
+
+// secured routes 
 router.route("/profile").get(verifyJwt,userProfile)
+router.route("/order").post(verifyJwt,userOrder)
+
+// vendor routes 
 router.route("/profile/vendor").get(verifyJwt,checkVendor,vendorProfile)
 router.route("/profile/vendor/all/products").get(verifyJwt,checkVendor,vendorProfileAllProducts)
 router.route("/profile/vendor/add/product").post(verifyJwt,checkVendor,upload.single("banner_img"), vendorProfileAddProduct)
