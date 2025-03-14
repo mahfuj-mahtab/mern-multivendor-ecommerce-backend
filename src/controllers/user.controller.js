@@ -63,7 +63,7 @@ const userLogin = asyncHandler(
     async (req,res)=>{
         const {email,password} = req.body
         const userExist = await User.findOne({email : email});
-        console.log(userExist);
+        
         
         if(!userExist){
             throw new ApiError(400,'User Not Available')
