@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router()
-import { userRegister, userLogin,userProfile } from "../controllers/user.controller.js";
+import { userRegister, userLogin,userProfile,userProfileEdit,userPasswordChange,refreshAccessToken } from "../controllers/user.controller.js";
 import { verifyJwt } from "../middlewares/auth.middleware.js";
 import checkVendor from "../middlewares/vendor.middleware.js";
 import { vendorProfile ,vendorProfileAllProducts,vendorProfileAddProduct,vendorProfileAllOrders} from "../controllers/vendor.controller.js";
@@ -13,6 +13,9 @@ router.route("/login").post(userLogin)
 // secured routes 
 router.route("/profile").get(verifyJwt,userProfile)
 router.route("/order").post(verifyJwt,userOrder)
+router.route("/profile/edit/").post(verifyJwt,userProfileEdit)
+router.route("/profile/edit/password").post(verifyJwt,userPasswordChange)
+router.route("/refresh-token").post(refreshAccessToken)
 
 // vendor routes 
 router.route("/profile/vendor").get(verifyJwt,checkVendor,vendorProfile)

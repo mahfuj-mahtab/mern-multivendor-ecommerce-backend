@@ -37,6 +37,7 @@ const vendorProfileAddProduct = asyncHandler(
             category,
             stock_quantity:quantity,
             vendor : vendor._id,
+            is_active : is_available === 'on' ? true : false,
            
         });
       
