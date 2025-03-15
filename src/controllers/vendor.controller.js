@@ -29,9 +29,12 @@ const vendorProfileAddProduct = asyncHandler(
         const {name,sku,description,category,stock_quantity,is_available} = req.body;
         
         const quantity = parseInt(stock_quantity);
+        const imageUrl = req.file.path.replace(/\\/g, "/").replace("public/", "");
+        console.log(imageUrl,'image url');
+        
         const product = await Product.create({
             name,
-            banner_img : req.file.path,
+            banner_img : imageUrl,
             sku,
             description,
             category,
