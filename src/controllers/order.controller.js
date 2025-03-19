@@ -9,9 +9,9 @@ const userOrder = asyncHandler(async (req, res) => {
     session.startTransaction(); // Start transaction
 
     try {
-        const { phone, address, order_items } = req.body;
+        const {order_items,customer,totalAmount } = req.body;
 
-        if (!phone || !address || !order_items || order_items.length === 0) {
+        if (!order_items || order_items.length === 0) {
             throw new ApiError(400, "Missing required fields");
         }
 
@@ -21,8 +21,8 @@ const userOrder = asyncHandler(async (req, res) => {
         // ✅ Step 1: Create the order FIRST
         const order = new Order({
             user: req.user._id,
-            phone,
-            address,
+            phone : customer['phone'],
+            address : customer['address'],
             order_price: 0, // Will update later
             order_items: [],
             payment_status: "UNPAID",
@@ -33,11 +33,11 @@ const userOrder = asyncHandler(async (req, res) => {
 
         // ✅ Step 2: Process Order Items
         for (const item of order_items) {
-            const vendor = await Vendor.findById(item.vendor_id).session(session);
+            const vendor = await Vendor.findById(item.vendor).session(session);
             if (!vendor) throw new ApiError(400, `Vendor not found: ${item.vendor_id}`);
 
-            const product = await Product.findById(item.product).session(session);
-            if (!product) throw new ApiError(400, `Product not found: ${item.product}`);
+            const product = await Product.findById(item._id).session(session);
+            if (!product) throw new ApiError(400, `Product not found: ${item._id}`);
 
             if (product.stock_quantity < item.quantity) {
                 throw new ApiError(400, `Not enough stock for product: ${product.name}`);
@@ -48,9 +48,9 @@ const userOrder = asyncHandler(async (req, res) => {
             const orderItem = new OrderItem({
                 order: savedOrder._id, // ✅ Now assigned correctly
                 vendor: vendor._id,
-                product: item.product,
+                product: item._id,
                 quantity: item.quantity,
-                price: item.price,
+                price: 100,
             });
 
             const savedOrderItem = await orderItem.save({ session });
